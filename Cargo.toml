@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 trust-dns-client = "0.20"
 eyre = { version = "0.6", default-features = false }
+stable-eyre = "0.2"

@@ -1,4 +1,5 @@
 use eyre::{eyre, Context, Result};
+use stable_eyre::Report;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 use std::str::FromStr;
 use std::{env, process};
@@ -76,7 +77,9 @@ fn dns_query(name: &Name, server: &Ipv4Addr) -> Result<DnsResponse> {
         .wrap_err_with(|| format!("Query failed"))
 }
 
-fn main() {
+fn main() -> Result<(), Report> {
+    stable_eyre::install()?;
+
     let mut args = env::args();
     match args.nth(1) {
         None => {
@@ -90,6 +93,7 @@ fn main() {
             let name = Name::from_str(&name).unwrap();
             let res = resolve(&name);
             println!("Result: {:?}", res);
+            Ok(())
         }
     }
 }
